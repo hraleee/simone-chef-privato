@@ -3,8 +3,8 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
-  const id = params.id;
+export async function PATCH(request: Request, context: { params: { id: string } }) {
+  const id = context.params.id;
   const data = await request.json();
   const updated = await prisma.menu.update({
     where: { id },
@@ -18,8 +18,8 @@ export async function PATCH(request: Request, { params }: { params: { id: string
   return NextResponse.json(updated);
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
-  const id = params.id;
+export async function DELETE(request: Request, context: { params: { id: string } }) {
+  const id = context.params.id;
   await prisma.menu.delete({ where: { id } });
   return NextResponse.json({ success: true });
-} 
+}
